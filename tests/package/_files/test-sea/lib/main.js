@@ -4,9 +4,9 @@ var FILE = require("file");
 var ASSERT = require("assert");
 
 exports.getInfo = function(visited) {
-    
+
     visited = visited || [];
-    
+
     var basePath = FILE.Path(module.path);
     while(basePath.basename()!="_files") {
         basePath = basePath.dirname();
@@ -18,12 +18,12 @@ exports.getInfo = function(visited) {
         "package": module["package"],
         "using": module.using
     }
-    
+
     if(UTIL.has(visited, info.id)) {
         return "RECURSION";
     }
     visited.push(info.id);
-    
+
     if(UTIL.len(module.using)>0) {
         info.subInfo = {};
         UTIL.every(module.using, function(item) {
@@ -41,6 +41,6 @@ exports.getInfo = function(visited) {
             info.subInfo = require("main", "test-package-1").getInfo(visited);
         }
     }
-    
+
     return info;
 }

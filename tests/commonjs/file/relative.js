@@ -20,7 +20,7 @@ util.forEachApply([
     // XXX the next two are disputed - kriskowal
     ["a", "a/b/c", "b/c"],
     ["a/", "a/b/c", "b/c"]
-        
+
 ], function (source, target, expected) {
     var name = (
         util.repr(source) + ' -> ' + util.repr(target) +

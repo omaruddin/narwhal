@@ -24,7 +24,7 @@ exports.B_COPY = function(src, srcOffset, dst, dstOffset, length) {
 
 exports.B_GET = function(bytes, index) {
     return bytes[index];
-}   
+}
 
 exports.B_SET = function(bytes, index, value) {
     return bytes[index] = value;

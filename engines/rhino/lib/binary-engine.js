@@ -19,7 +19,7 @@ exports.B_COPY = function(src, srcOffset, dst, dstOffset, length) {
 
 exports.B_GET = function(bytes, index) {
     return (bytes[index] >>> 0) & 0xFF;
-}   
+}
 
 exports.B_SET = function(bytes, index, value) {
     return bytes[index] = ((value & 0x80) ? -1 - (value ^ 0xFF) : value);
@@ -61,13 +61,13 @@ function wrapper(that) {
             get : function(index, start) {
                 if (typeof index === "number")
                     return that.get(index);
-            
+
                 return that[index];
             },
             has : function(index, start) {
                 if (typeof index === "number")
                     return index < that._length;
-            
+
                 return (that[index] !== undefined)
             },
             put : function(index, start, value) {
@@ -85,7 +85,7 @@ function wrapper(that) {
     );
 
     obj.__proto__ = that;
-    
+
     return obj;
 }
 

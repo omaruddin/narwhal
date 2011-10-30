@@ -209,7 +209,7 @@ exports.TextIOWrapper = function (raw, mode, lineBuffering, buffering, charset, 
     } else {
         throw new Error("file must be opened for read, write, or append mode.");
     }
-}; 
+};
 
 
 /* ByteIO */
@@ -219,9 +219,9 @@ exports.TextIOWrapper = function (raw, mode, lineBuffering, buffering, charset, 
 var ByteIO = exports.ByteIO = function(binary) {
     this.inputStream = binary ? new java.io.ByteArrayInputStream(binary._bytes, binary._offset, binary._length) : null;
     this.outputStream = new java.io.ByteArrayOutputStream();
-    
+
     var stream = (this.inStream, this.outStream);
-    
+
     this.length = binary ? binary.length : 0;
 };
 
@@ -249,7 +249,7 @@ var StringIO = exports.StringIO = function (initial, delimiter) {
     }
 
     function read(length) {
-        if (arguments.length == 0) { 
+        if (arguments.length == 0) {
             var result = String(buffer);
             buffer['delete'](0, buffer.length());
             return result;

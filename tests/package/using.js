@@ -18,8 +18,8 @@ exports.testAll = function() {
     // everything goes through the sandbox from now on
     require = function(id, pkg) {
         return sandbox(id, null, pkg);
-    }    
-    
+    }
+
     require("global");
     var packages = require("packages");
     packages.load([
@@ -107,7 +107,7 @@ exports.testAll = function() {
     );
 
     var main = require("main", "test-sea");
-    
+
     ASSERT.deepEqual(
         main.getInfo(),
         {

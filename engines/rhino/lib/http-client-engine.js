@@ -8,10 +8,10 @@ var engine = exports;
 
 engine.connect = function HttpClient_engine_connect (tx) {
     if (tx._isConnected) return;
-    
+
     var con = java.net.HttpURLConnection(new java.net.URL(tx.url).openConnection());
     con.setRequestMethod(tx.method.toUpperCase());
-    
+
     HashP.forEach(tx.headers, function (h, v) {
         con.setRequestProperty(h, v);
     });
@@ -31,7 +31,7 @@ engine.connect = function HttpClient_engine_connect (tx) {
             writer.close();
         }
     }
-    
+
     try {
         con.connect();
     } catch (ex) {
@@ -43,16 +43,16 @@ engine.connect = function HttpClient_engine_connect (tx) {
         ].join("\n");
         throw ex;
     }
-    
+
     tx._isConnected = true;
     var resp = tx._response = {status:200, headers:{}, body:[]};
-    
+
     // Call this now to trigger the fetch asynchronously.
     // This way, if you set up multiple HttpClients, and then call connect()
     // on all of them, you'll only wait as long as the slowest one, since
     // the streams will start filling up right away.
-    
-    
+
+
     // now pull everything out.
     var fields = con.getHeaderFields();
     var fieldKeys = fields.keySet().toArray();
@@ -77,7 +77,7 @@ engine.connect = function HttpClient_engine_connect (tx) {
     } catch (ex) {
         return resp;
     }
-    
+
     // TODO: Should the input stream be rewindable?
     var reader = new IO(con.getInputStream(), null);
     resp.body = {forEach : function (block) {
@@ -88,6 +88,6 @@ engine.connect = function HttpClient_engine_connect (tx) {
             bytes = reader.read(buflen)
         ) block(bytes);
     }};
-    
+
     return resp;
 };

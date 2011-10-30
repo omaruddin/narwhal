@@ -58,7 +58,7 @@ The "file" module must export the following:
 : '''TODO''' Decide upon the name of this function. "mkdirs" or "mktree" or "makeTree"
 : Will create the directory specified by "path" including any missing parent directories.
 :
-; rmdir(path String) 
+; rmdir(path String)
 : Removes a directory if it is empty. If it is not, or cannot be removed for another reason an exception will be thrown.
 :
 ; rmtree(path String)
@@ -89,7 +89,7 @@ The current working directory is used by all routines that resolve relative path
 : takes a variadic list of path Strings, joins them on the file system's path separator, and normalizes the result.
 ; split(path String) Array
 : returns an array of path components.  If the path is absolute, the first component will be an indicator of the root of the file system; for file systems with drives (such as Windows), this is the drive identifier with a colon, like "c:"; on Unix, this is an empty string "".  The intent is that calling "join.apply" with the result of "split" as arguments will reconstruct the path.
-; normal(path String) 
+; normal(path String)
 : removes '.' path components and simplifies '..' paths, if possible, for a given path.
 ; absolute(path String)
 : returns the absolute path, starting with the root of this file system object, for the given path, resolved from the current working directory.  If the file system supports home directory aliases, absolute resolves those from the root of the file system.  The resulting path is in normal form.  On most systems, this is equivalent to expanding any user directory alias, joining the path to the current working directory, and normalizing the result.  "absolute" can be implemented in terms of "cwd", "join", and "normal".

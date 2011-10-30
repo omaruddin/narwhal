@@ -7,7 +7,7 @@
 
     var prefix = "/path/to/narwhal"; /*TODO*/
     var enginePrefix = "/path/to/engine"; /*TODO*/
-    
+
     eval(read(prefix + "/narwhal.js"))({
         system: {
             global: this,

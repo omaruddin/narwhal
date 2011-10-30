@@ -17,7 +17,7 @@ var engine = require("binary-engine"),
     B_DECODE_DEFAULT = engine.B_DECODE_DEFAULT,
     B_ENCODE_DEFAULT = engine.B_ENCODE_DEFAULT,
     B_TRANSCODE = engine.B_TRANSCODE;
-    
+
 var Binary = exports.Binary = function() {
     // this._bytes
     // this._offset
@@ -37,20 +37,20 @@ Object.defineProperty(Binary.prototype, "length", {
 Binary.prototype.toArray = function(charset) {
     if (arguments.length === 0) {
         var array = new Array(this._length);
-        
+
         for (var i = 0; i < this._length; i++)
             array[i] = this.get(i);
-        
+
         return array;
     }
     else if (arguments.length === 1) {
         var string = B_DECODE(this._bytes, this._offset, this._length, charset),
             length = string.length,
             array = new Array(length);
-        
+
         for (var i = 0; i < length; i++)
             array[i] = string.charCodeAt(i);
-        
+
         return array;
     }
     else
@@ -66,7 +66,7 @@ Binary.prototype.toByteArray = function(sourceCodec, targetCodec) {
         var bytes = B_TRANSCODE(this._bytes, this._offset, this._length, sourceCodec, targetCodec);
         return new ByteArray(bytes, 0, B_LENGTH(bytes));
     }
-    
+
     throw new Error("Illegal arguments to ByteArray toByteArray");
 };
 
@@ -79,7 +79,7 @@ Binary.prototype.toByteString = function(sourceCodec, targetCodec) {
         var bytes = B_TRANSCODE(this._bytes, this._offset, this._length, sourceCodec, targetCodec);
         return new ByteString(bytes, 0, B_LENGTH(bytes));
     }
-    
+
     throw new Error("Illegal arguments to ByteArray toByteString");
 };
 
@@ -102,7 +102,7 @@ Binary.prototype.decodeToString = function(charset) {
 Binary.prototype.get = function(offset) {
     if (offset < 0 || offset >= this._length)
         return NaN;
-    
+
     //var b = this._bytes[this._offset + offset];
     //return (b >= 0) ? b : -1 * ((b ^ 0xFF) + 1);
     return B_GET(this._bytes, this._offset + offset)
@@ -195,7 +195,7 @@ var ByteString = exports.ByteString = function() {
         var util = require("util");
         throw new Error("Illegal arguments to ByteString constructor: " + util.repr(arguments));
     }
-    
+
     if (engine.ByteStringWrapper)
         return engine.ByteStringWrapper(this);
     else
@@ -226,7 +226,7 @@ ByteString.prototype.__defineSetter__("length", function(length) {
 ByteString.prototype.toString = function(charset) {
     if (charset)
         return this.decodeToString(charset);
-        
+
     return "[ByteString "+this._length+"]";
 };
 
@@ -236,10 +236,10 @@ ByteString.prototype.toString = function(charset) {
 ByteString.prototype.byteAt =
 ByteString.prototype.charAt = function(offset) {
     var byteValue = this.get(offset);
-    
+
     if (isNaN(byteValue))
         return new ByteString();
-        
+
     return new ByteString([byteValue]);
 };
 
@@ -259,30 +259,30 @@ ByteString.prototype.split = function(delimiters, options) {
     var options = options || {},
         count = options.count === undefined ? -1 : options.count,
         includeDelimiter = options.includeDelimiter || false;
-    
+
     // standardize delimiters into an array of ByteStrings:
     if (!Array.isArray(delimiters))
         delimiters = [delimiters];
-        
+
     delimiters = delimiters.map(function(delimiter) {
         if (typeof delimiter === "number")
             delimiter = [delimiter];
         return new ByteString(delimiter);
     });
-    
+
     var components = [],
         startOffset = this._offset,
         currentOffset = this._offset;
-    
+
     // loop until there's no more bytes to consume
     bytes_loop :
     while (currentOffset < this._offset + this._length) {
-        
+
         // try each delimiter until we find a match
         delimiters_loop :
         for (var i = 0; i < delimiters.length; i++) {
             var d = delimiters[i];
-            
+
             for (var j = 0; j < d._length; j++) {
                 // reached the end of the bytes, OR bytes not equal
                 if (currentOffset + j > this._offset + this._length ||
@@ -290,28 +290,28 @@ ByteString.prototype.split = function(delimiters, options) {
                     continue delimiters_loop;
                 }
             }
-            
+
             // push the part before the delimiter
             components.push(new ByteString(this._bytes, startOffset, currentOffset - startOffset));
-            
+
             // optionally push the delimiter
             if (includeDelimiter)
                 components.push(new ByteString(this._bytes, currentOffset, d._length))
-            
+
             // reset the offsets
             startOffset = currentOffset = currentOffset + d._length;
-            
+
             continue bytes_loop;
         }
-        
+
         // if there was no match, increment currentOffset to try the next one
         currentOffset++;
     }
-    
+
     // push the remaining part, if any
     if (currentOffset > startOffset)
         components.push(new ByteString(this._bytes, startOffset, currentOffset - startOffset));
-    
+
     return components;
 };
 
@@ -323,15 +323,15 @@ ByteString.prototype.slice = function(begin, end) {
         begin = 0;
     else if (begin < 0)
         begin = this._length + begin;
-        
+
     if (end === undefined)
         end = this._length;
     else if (end < 0)
         end = this._length + end;
-    
+
     begin = Math.min(this._length, Math.max(0, begin));
     end = Math.min(this._length, Math.max(0, end));
-    
+
     return new ByteString(this._bytes, this._offset + begin, end - begin);
 };
 
@@ -444,7 +444,7 @@ var ByteArray = exports.ByteArray = function() {
     else
         throw new Error("Illegal arguments to ByteString constructor: [" +
             Array.prototype.join.apply(arguments, [","]) + "] ("+arguments.length+")");
-    
+
     if (engine.ByteArrayWrapper)
         return engine.ByteArrayWrapper(this);
     else
@@ -459,7 +459,7 @@ ByteArray.prototype.__defineGetter__("length", function() {
 ByteArray.prototype.__defineSetter__("length", function(length) {
     if (typeof length !== "number")
         return;
-    
+
     // same length
     if (length === this._length) {
         return;
@@ -495,10 +495,10 @@ ByteArray.prototype.set = function(index, b) {
     // If any element is outside the range 0...255, an exception (TODO) is thrown.
     if (b < 0 || b > 0xFF)
         throw new Error("ByteString constructor argument Array of integers must be 0 - 255 ("+b+")");
-        
+
     if (index < 0 || index >= this._length)
         throw new Error("Out of range");
-    
+
     // Java "bytes" are interpreted as 2's complement
     //this._bytes[this._offset + index] = (b < 128) ? b : -1 * ((b ^ 0xFF) + 1);
     B_SET(this._bytes, this._offset + index, b);
@@ -521,8 +521,8 @@ ByteArray.prototype.set = function(index, b) {
 ByteArray.prototype.toString = function(charset) {
     if (charset)
         return this.decodeToString(charset);
-    
-    return "[ByteArray "+this._length+"]"; 
+
+    return "[ByteArray "+this._length+"]";
 };
 
 // decodeToString(charset) - implemented on Binary
@@ -538,28 +538,28 @@ ByteArray.prototype.toString = function(charset) {
 ByteArray.prototype.concat = function() {
     var components = [this],
         totalLength = this._length;
-    
+
     for (var i = 0; i < arguments.length; i++) {
         var component = Array.isArray(arguments[i]) ? arguments[i] : [arguments[i]];
-        
+
         for (var j = 0; j < component.length; j++) {
             var subcomponent = component[j];
             if (!(subcomponent instanceof ByteString) && !(subcomponent instanceof ByteArray))
                 throw "Arguments to ByteArray.concat() must be ByteStrings, ByteArrays, or Arrays of those.";
-            
+
             components.push(subcomponent);
             totalLength += subcomponent.length;
         }
     }
-    
+
     var result = new ByteArray(totalLength),
         offset = 0;
-    
+
     components.forEach(function(component) {
         B_COPY(component._bytes, component._offset, result._bytes, offset, component._length);
         offset += component._length;
     });
-    
+
     return result;
 };
 
@@ -567,9 +567,9 @@ ByteArray.prototype.concat = function() {
 ByteArray.prototype.pop = function() {
     if (this._length === 0)
         return undefined;
-    
+
     this._length--;
-    
+
     return B_GET(this._bytes, this._offset + this._length);
 };
 
@@ -595,10 +595,10 @@ ByteArray.prototype.extendRight = function() {
 ByteArray.prototype.shift = function() {
     if (this._length === 0)
         return undefined;
-    
+
     this._length--;
     this._offset++;
-    
+
     return B_GET(this._bytes, this._offset - 1);
 };
 
@@ -627,14 +627,14 @@ ByteArray.prototype.reverse = function() {
     // "limit" is halfway, rounded down. "top" is the last index.
     var limit = Math.floor(this._length/2) + this._offset,
         top = this._length - 1;
-        
+
     // swap each pair of bytes, up to the halfway point
     for (var i = this._offset; i < limit; i++) {
         var tmp = B_GET(this._bytes, i);
         B_SET(this._bytes, i, B_GET(this._bytes, top - i));
         B_SET(this._bytes, top - i, tmp);
     }
-    
+
     return this;
 };
 
@@ -648,14 +648,14 @@ var numericCompareFunction = function(o1, o2) { return o1 - o2; };
 // sort([compareFunction])
 ByteArray.prototype.sort = function(compareFunction) {
     // FIXME: inefficient?
-    
+
     var array = this.toArray();
-    
+
     if (arguments.length)
         array.sort(compareFunction);
     else
         array.sort(numericCompareFunction);
-    
+
     for (var i = 0; i < array.length; i++)
         this.set(i, array[i]);
 };
@@ -681,13 +681,13 @@ ByteArray.prototype.splice = function(index, howMany /*, elem1, elem2 */) {
 // split() Returns an array of ByteArrays instead of ByteStrings.
 ByteArray.prototype.split = function() {
     var components = ByteString.prototype.split.apply(this.toByteString(), arguments);
-    
+
     // convert ByteStrings to ByteArrays
     for (var i = 0; i < components.length; i++) {
         // we know we can use these byte buffers directly since we copied them above
         components[i] = new ByteArray(components[i]._bytes, components[i]._offset, components[i]._length);
     }
-    
+
     return components;
 };
 

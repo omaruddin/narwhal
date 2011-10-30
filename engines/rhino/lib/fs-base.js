@@ -22,7 +22,7 @@ The "fs-base" module exports a minimal, engine-specific interface for
 manipulating a file system and constructing raw byte streams.  The [[IO|IO
 stream API]] is beyond the scope of this specification.  It is the intent of
 this specification to provide exactly and only the components of a file system
-API that cannot be implemented in pure JavaScript.  
+API that cannot be implemented in pure JavaScript.
 
 ''Pending the ratification of [[Filesystem/A]]: Implementations may opt to
 provide more methods, matching the interfaces specified in [[Filesystem/A]], if
@@ -81,10 +81,10 @@ of Permissions are initially deep copies of all transitively owned properties
 of Permissions.default and have a eponymous property for the optional
 "constructor" argument of the constructor.
 ** Mandatory properties on all platforms are Boolean values owner.read and
-owner.write. 
+owner.write.
 ** Mandatory properties on UNIX platforms platforms are Boolean values
 owner.{read, write, execute}, group.{read, write, execute} and other.{read,
-write, execute}. 
+write, execute}.
 ** Permissions.default must initially reflect the current default file creation
 permissions in the host environment; i.e. in a UNIX environment,
 Permissions.default would reflect the inverse of umask. Where this is not
@@ -188,9 +188,9 @@ exports.Permissions['default'] = new exports.Permissions(
 
 ; openRaw(path, mode, permissions)
 : returns a raw byte stream object with the given mode and permissions from the
-[[IO]] system. The details of this object are unspecified, except 
+[[IO]] system. The details of this object are unspecified, except
 * it has a "close" method that closes any operating-system level resources
-allocated by "openRaw", and 
+allocated by "openRaw", and
 * the garbage collector must finalize the stream by performing an equivalent
 operation to the "close" method to prevent resource leaks.
 
@@ -255,7 +255,7 @@ exports.openRaw = function (path, mode, permissions) {
 
 ; move(source, target)
 : Moves a file at one path to another. Failure to move the file, or specifying
-a directory for target when source is a file must throw an exception. 
+a directory for target when source is a file must throw an exception.
 
 * When the files are in the same file system, a compliant implementation must
 use the operating system's underlying atomic move or rename function to perform
@@ -359,7 +359,7 @@ created for any reason an exception must be thrown. This includes if the parent
 directories of "path" are not present. The '''permissions''' object passed to
 this method is used as the argument to the Permissions constructor. The
 resultant Permissions instance is applied to the given path during directory
-creation. 
+creation.
 
 * Conforming implementations must create the directory with the exact
 permissions given, rather than applying the permissions after directory
@@ -384,7 +384,7 @@ exports.makeDirectory = function (path) {
 
 /*spec
 
-; removeDirectory(path) 
+; removeDirectory(path)
 : Removes a directory if it is empty. If path is not empty, not a directory, or
 cannot be removed for another reason an exception must be thrown. If path is a
 link and refers canonically to a directory, the link must be removed.
@@ -490,7 +490,7 @@ exports.workingDirectory = function () {
 
 ; changeWorkingDirectory(path)
 : changes the current working directory to the given path, resolved on the
-current working directory. Throws an exception if the operation failed. 
+current working directory. Throws an exception if the operation failed.
 
 * ''Note: It is not required that this method call the operating system's
 underlying change-directory system call; virtualizing the appearance of a
@@ -523,7 +523,7 @@ exports.changeWorkingDirectory = function (path) {
 ; owner(path) Number ''optional''
 : returns the name of the owner of a file with typeof string. Where the owner
 name is not defined, a numeric userId with typeof number may be returned
-instead. 
+instead.
 
 */
 
@@ -537,7 +537,7 @@ exports.owner = function (path) {
 
 /*spec
 
-; group(path) String 
+; group(path) String
 ; group(path) Number ''optional''
 : returns the name of the group owner of a file with typeof string. Where the
 group name is not defined, a numeric groupId with typeof number may be returned
@@ -734,7 +734,7 @@ exports.readLink = function (path) {
 
 ; exists(path)
 : returns true if a file (of any type) or a directory exists at a given path.
-If the file is a broken symbolic link, returns false. 
+If the file is a broken symbolic link, returns false.
 
 */
 
@@ -913,7 +913,7 @@ exports.sameFilesystem = function () {
 : returns the size of a file in bytes, or throws an exception if the path does
 not correspond to an accessible path, or is not a regular file or a link. If
 path is a link, returns the size of the final link target, rather than the link
-itself. 
+itself.
 : Care should be taken that this number returned is suitably large (i.e. that
 we can get useful figures for files over 1GB (30bits+sign bit). If the size of
 a file cannot be represented by a JavaScript number, "size" must throw a
