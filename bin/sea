@@ -28,7 +28,7 @@ source "$PACKAGE_HOME/bin/activate.bash"
 
 export OLDSEA="$SEA"
 export SEA="$PACKAGE_HOME"
-export SEALVL="$((SEALVL + 1))" 
+export SEALVL="$((SEALVL + 1))"
 
 if [ "$#" -lt 1 ]; then
     echo PATH="$PATH" >&2

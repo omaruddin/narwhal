@@ -12,7 +12,7 @@ exports.testWriteRead = function() {
     } finally {
         fs.remove(path);
     }
-}; 
+};
 
 exports.testOpenWriteReadWrongMode = function () {
     var path = "testOpenWriteReadWrongMode.txt";
@@ -119,7 +119,7 @@ exports.testWriteReadNewlineNotEnforced = function() {
     } finally {
         fs.remove(path);
     }
-}; 
+};
 /*
 exports.testWriteReadNewlineEnforced = function() {
     try {
@@ -271,14 +271,14 @@ exports.testsRenameList = function () {
 exports.testsMtime = function () {
     try {
         fs.mkdir('testsMtime');
-        
+
         // add/subtract 1 second to account for lower precision of mtime
         var before = new Date().getTime() - 1000;
         fs.path('testsMtime', 'A.txt').touch();
         var after = new Date().getTime() + 1000;
-        
+
         var mtime = fs.path('testsMtime', 'A.txt').mtime().getTime();
-        
+
         assert.isTrue(before <= mtime, "Expected " + before + " <= " + mtime);
         assert.isTrue(mtime <= after, "Expected " + mtime + " <= " + after);
     } finally {

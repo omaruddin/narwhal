@@ -14,6 +14,6 @@ exports.readline = function() {
         };
         return exports.readline();
     }
-    
+
     return String(line);
 }

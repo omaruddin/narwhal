@@ -3,14 +3,14 @@
 var FILE = require("file"),
     Worker = require("worker").Worker;
 
-var worker = new Worker(FILE.join(FILE.dirname(module.path), "fibonacci-worker.js"));  
+var worker = new Worker(FILE.join(FILE.dirname(module.path), "fibonacci-worker.js"));
 
-worker.onmessage = function(event) {  
-    print("Got: " + event.data);  
+worker.onmessage = function(event) {
+    print("Got: " + event.data);
 }
 
-worker.onerror = function(error) {  
-    print("Worker error: " + error.message);  
+worker.onerror = function(error) {
+    print("Worker error: " + error.message);
 }
 
 worker.postMessage(5);

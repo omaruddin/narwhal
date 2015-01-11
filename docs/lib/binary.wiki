@@ -159,13 +159,13 @@ All values within the length of the array are numbers stored as bytes that defau
 ; push(...variadic Numbers...) -> count(Number)
 :
 ; <u>extendRight(...variadic Numbers / Arrays / ByteArrays / ByteStrings ...)</u>
-: 
+:
 ; shift() byte:Number
 :
 ; unshift(...variadic Numbers...) count:Number
 :
 ; <u>extendLeft(...variadic Numbers / Arrays / ByteArrays / ByteStrings ...)</u>
-: 
+:
 ; reverse() in place reversal
 :
 ; slice()
@@ -178,7 +178,7 @@ All values within the length of the array are numbers stored as bytes that defau
 :
 ; <u>lastIndexOf()</u>
 :
-; <u>split()</u> 
+; <u>split()</u>
 : Returns an array of ByteArrays instead of ByteStrings.
 ; <u>filter()</u>
 :

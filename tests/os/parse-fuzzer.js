@@ -21,7 +21,7 @@ function shellParse(argString) {
 
 var testIndex = -1;
 function buildTestString() {
-    
+
     if (random) {
         var components = [];
         var n = Math.round(Math.random()*maxLength);
@@ -49,11 +49,11 @@ while (true) {
         // TODO: test invalid behavior matches?
         continue;
     }
-    
+
     var actualArgs = OS.parse(argString);
-    
+
     var pass = UTIL.eq(expectedArgs, actualArgs);
-    
+
     stream.print("[" + testIndex + "] " + (pass ? "\0green(PASS\0)" : "\0red(FAIL\0)") +
         ": string=["+argString+"] expected=["+expectedArgs+"]("+expectedArgs.length+") actual=["+actualArgs+"]("+actualArgs.length+")");
 }

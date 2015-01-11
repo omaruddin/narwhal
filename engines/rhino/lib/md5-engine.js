@@ -18,7 +18,7 @@ exports.hash = function (str) {
 };
 
 // deprecated
-// 
+//
 
 var MD5 = exports.MD5 = {};
 
@@ -26,12 +26,12 @@ MD5.hexdigest = function(str) {
     system.log.warn('hexdigest is depreacted, use md5.hash().toString(16)');
     var jstr = new JString(str);
     var algorithm = JMessageDigest.getInstance("MD5");
-    
+
     algorithm.reset();
     algorithm.update(jstr.getBytes());
 
     var messageDigest = algorithm.digest();
-    
+
     var hexString = new JStringBuffer();
     for (var i = 0; i < messageDigest.length; i++) {
         hexString.append(JInteger.toHexString(0xFF & messageDigest[i]));

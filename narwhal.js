@@ -177,7 +177,7 @@ if (deprecated) {
 
 // enable loader tracing
 global.require.debug = options.verbose;
-// in verbose mode, list all the modules that are 
+// in verbose mode, list all the modules that are
 // already loaded
 if (!wasVerbose && system.verbose) {
     Object.keys(modules).forEach(function (name) {

@@ -2,7 +2,7 @@ var assert = require("test/assert");
 var fs = require("file");
 
 exports.testIsLink = function () {
-    
+
     var here = fs.path(module.path).dirname().join("_test");
     if (here.exists()) {
         here.rmtree();

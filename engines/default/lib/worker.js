@@ -36,7 +36,7 @@ function createPort(queue, target, port, global){
                 target: target,
                 ports: [target],
                 // this can be optimized to be much faster
-                data: typeof message == "string" ? message : 
+                data: typeof message == "string" ? message :
                     global.JSON.parse(JSON.stringify(message)),
             }
             if(typeof target.onmessage == "function"){
@@ -48,21 +48,21 @@ function createPort(queue, target, port, global){
 }
 var createEnvironment = exports.createEnvironment = function(){
     var workerGlobal = workerEngine.createEnvironment();
-    
+
     // add the module lookup paths from our environment
     var paths = workerGlobal.require.paths;
     paths.splice(0, paths.length);
     paths.push.apply(paths, require.paths);
-    
+
     // there must be one and only one shared worker map amongst all workers
     workerGlobal.system.__sharedWorkers__ = system.__sharedWorkers__;
 
-	return workerGlobal;	
+	return workerGlobal;
 };
 function createWorker(scriptName, setup, workerName){
-    var workerQueue, 
+    var workerQueue,
         workerGlobal = createEnvironment();
-    
+
     var sandbox = workerGlobal.require("sandbox").Sandbox({
             system: workerGlobal.system,
             loader: workerGlobal.require.loader,
@@ -73,13 +73,13 @@ function createWorker(scriptName, setup, workerName){
             debug: workerGlobal.require.loader.debug
         });
     // get the event queue
-    workerQueue = sandbox("event-queue"); 
-    
+    workerQueue = sandbox("event-queue");
+
     sandbox("worker").name = workerName;
-    
+
     // calback for dedicated and shared workers to do their thing
     var worker = setup(workerQueue, workerGlobal);
-    
+
     workerEngine.spawn(function(){
         sandbox.main(scriptName);
         // enter the event loop
@@ -110,9 +110,9 @@ exports.SharedWorker = function(scriptName, workerName){
         system.__sharedWorkers__[workerName] = shared;
     }
     var port = {};
-    
+
     var returnPort = createPort(queue, port, null, global);
-    
+
     createPort(shared.queue, returnPort, port, shared.global);
     shared.queue.enqueue(function(){
         if(typeof shared.global.onconnect == "function"){

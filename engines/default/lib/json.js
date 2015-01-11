@@ -476,11 +476,11 @@ replace(/(?:^|:|,)(?:\s*\[)+/g, ''))) {
     }
 })();
 
-/** 
- * Serialize an object to a JSON string. 
+/**
+ * Serialize an object to a JSON string.
  */
 JSON.encode = JSON.stringify;
- 
+
 /**
  * Deserialize an object from a JSON string.
  */

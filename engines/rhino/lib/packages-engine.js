@@ -52,12 +52,12 @@ exports.addJavaPaths = function addJavaPaths(javaPaths) {
     if (/*typeof Packages == "object"  this no longer works in latest builds of Rhino || */
             system.appEngine)
         return;
-    
+
     var context = Packages.org.mozilla.javascript.Context.getCurrentContext();
     // check to see if class loader is already in place
     if (context.getApplicationClassLoader().getClass() == Packages.java.net.URLClassLoader)
         return;
-    
+
     /* set up jar loader */
     var urls = Packages.java.lang.reflect.Array.newInstance(java.net.URL, javaPaths.length);
     for (var i = 0; i < javaPaths.length; i++) {

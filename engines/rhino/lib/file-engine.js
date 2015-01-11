@@ -152,7 +152,7 @@ exports.link = function (source, target) {
 
 exports.symlink = function (source, target) {
     // XXX this behavior of resolving the source
-    // path from the target path when the source 
+    // path from the target path when the source
     // path is relative ought to be discussed
     // on ServerJS
     if (exports.isRelative(source))

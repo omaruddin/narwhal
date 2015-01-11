@@ -27,7 +27,7 @@ exports.testSingleQuotedPath = function() {
     ASSERT.equal(3, result.length);
     ASSERT.equal("command", result[0]);
     ASSERT.equal("-path", result[1]);
-    ASSERT.equal("/Volume/path with space/dir", result[2]); 
+    ASSERT.equal("/Volume/path with space/dir", result[2]);
 };
 
 exports.testDoubleQuotedPath = function() {
@@ -85,11 +85,11 @@ exports.testAllEscapeTypes = function() {
     ASSERT.equal(result.length, 7);
     ASSERT.equal("command", result[0]);
     ASSERT.equal("-path", result[1]);
-    ASSERT.equal("/Volume/path with space/dir", result[2]); 
+    ASSERT.equal("/Volume/path with space/dir", result[2]);
     ASSERT.equal("-I", result[3]);
     ASSERT.equal("/volume/path with space", result[4]);
     ASSERT.equal("-L", result[5]);
-    ASSERT.equal("/volume/libs with space/lib", result[6]);   
+    ASSERT.equal("/volume/libs with space/lib", result[6]);
 };
 
 if (require.main == module.id)

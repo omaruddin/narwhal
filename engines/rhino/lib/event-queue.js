@@ -8,9 +8,9 @@
 
 // we could eventually upgrade to PriorityBlockingQueye with FIFOEntry tie breaking
 var loopLevel = 0,
-    shuttingDown, 
+    shuttingDown,
     queue = new java.util.concurrent.LinkedBlockingQueue();
-    
+
 
 exports.getNextEvent = function(){
     return queue.take();
@@ -77,7 +77,7 @@ exports.enqueue = function(task, priority){
 };
 
 exports.hasPendingEvents = function(){
-    return !queue.isEmpty();    
+    return !queue.isEmpty();
 }
 
 // based on Node's process.unloop();

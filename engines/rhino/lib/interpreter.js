@@ -9,7 +9,7 @@
 var Context = exports.Context = function() {
     var self = this;
 
-    // TODO: verify this is the correct way to obtain a Context. 
+    // TODO: verify this is the correct way to obtain a Context.
     // var context = new Packages.org.mozilla.javascript.Context();
     function getContext() {
         // return context;
